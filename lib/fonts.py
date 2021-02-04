@@ -11,6 +11,7 @@ raleway_light = "Raleway/Raleway-Light.ttf"
 
 raleway_bold_30 = ImageFont.truetype(os.path.join(fontdir, raleway_bold), 30)
 raleway_bold_40 = ImageFont.truetype(os.path.join(fontdir, raleway_bold), 40)
+raleway_bold_50 = ImageFont.truetype(os.path.join(fontdir, raleway_bold), 50)
 
 raleway_reg_25 = ImageFont.truetype(os.path.join(fontdir, raleway_reg), 25)
 raleway_reg_20 = ImageFont.truetype(os.path.join(fontdir, raleway_reg), 20)

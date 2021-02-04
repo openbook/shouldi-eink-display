@@ -81,7 +81,7 @@ def main():
     img = Image.new("P", inky_display.resolution)
     draw = ImageDraw.Draw(img)
     plot = Image.open("energy.png")
-    img.paste(plot, (-28, 24))
+    img.paste(plot, (-28, 26))
     draw.rectangle([(0, 0), (400, 55)], inky_display.BLACK)
     draw.text((10, 10), "Agile tariff ", inky_display.WHITE, font=fonts.raleway_reg_30)
     draw.text((160, 20), "p/kWh ", inky_display.WHITE, font=fonts.raleway_reg_20)

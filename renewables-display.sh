@@ -5,7 +5,7 @@ sudo apt install git python3-pandas python3-pip python3-matplotlib
 curl https://get.pimoroni.com/inky | bash
 
 ## Fetch the display repo code
-git clone https://github.com/openbook/
+git clone https://github.com/openbook/shouldi-eink-display.git
 
 cd should-eink-display
 

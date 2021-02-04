@@ -6,7 +6,7 @@ from PIL import ImageOps, Image, ImageFont, ImageDraw
 from inky.auto import auto
 
 imgdir = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.relpath(__file__))), "imgdir"
+    os.path.dirname(os.path.dirname(os.path.relpath(__file__))), "assets"
 )
 
 if os.path.exists("lib"):
@@ -50,7 +50,7 @@ def main():
 
     rhs_start = 215
     draw.text((rhs_start, 10), "London", inky_display.BLACK, font=fonts.raleway_reg_50)
-    draw.text((rhs_start, 70), "N1", inky_display.BLACK, font=fonts.raleway_reg_50)
+    draw.text((rhs_start, 70), "N1", inky_display.BLACK, font=fonts.raleway_bold_50)
     draw.text(
         (rhs_start, 135), "Total", inky_display.BLACK, font=fonts.raleway_light_25
     )
