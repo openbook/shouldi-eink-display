@@ -63,8 +63,8 @@ def main():
         img.paste(trueImage if value["afternoon"] else falseImage, (280, yValue))
         img.paste(trueImage if value["evening"] else falseImage, (320, yValue))
         img.paste(trueImage if value["night"] else falseImage, (360, yValue))
-
-        max_value = max_x_options.get(ci_daily_max[date], "Invalid max")
+        max_slot, max_value = ci_daily_max[date]
+        max_value = max_x_options.get(max_slot, "Invalid max")
         draw.rectangle(
             [(max_value + 4, yValue + 33), (max_value + 28, yValue + 35)],
             inky_display.BLACK,

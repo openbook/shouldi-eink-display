@@ -31,7 +31,7 @@ def main():
     total_value = carbon_intensity.now("total")
 
     total = 0
-    draw.text((15, 3), "Now", inky_display.WHITE, font=fonts.raleway_reg_40)
+    draw.text((15, 3), "Now", inky_display.WHITE, font=fonts.raleway_reg_30)
     for value in intensity_data:
         percentage_value = int(round(value["perc"]))
         coordsx = 100
@@ -80,7 +80,8 @@ def main():
         img.paste(trueImage if value["afternoon"] else falseImage, (285, yValue))
         img.paste(trueImage if value["evening"] else falseImage, (325, yValue))
         img.paste(trueImage if value["night"] else falseImage, (365, yValue))
-        max_value = max_x_options.get(ci_daily_max[date], "Invalid max")
+        max_slot, max_value = ci_daily_max[date]
+        max_value = max_x_options.get(max_slot, "Invalid max")
         draw.rectangle(
             [(max_value + 4, yValue + 33), (max_value + 28, yValue + 35)],
             inky_display.BLACK,

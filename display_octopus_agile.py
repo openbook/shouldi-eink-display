@@ -14,11 +14,12 @@ import matplotlib.dates as mdates
 if os.path.exists("lib"):
     sys.path.append("lib")
 import fonts
-
+imgdir = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.relpath(__file__))), "assets"
+)
 
 def main():
     inky_display = auto()
-    inky_display.set_border(inky_display.WHITE)
     BASE_URL = "https://api.octopus.energy/v1/products/AGILE-18-02-21/electricity-tariffs/E-1R-AGILE-18-02-21-C/standard-unit-rates/"
     params = {}
     params["period_from"] = (
@@ -63,6 +64,7 @@ def main():
     plt.tight_layout()
     figure = plt.gcf()  # get current figure
     ax = plt.gca()
+    ax.margins(x=0,y=0)
     df.plot(
         kind="bar",
         x="valid_from",
@@ -70,7 +72,7 @@ def main():
         ax=ax,
         color="black",
         legend=False,
-        figsize=(4.75, 2.8),
+        figsize=(4.75, 2.6),
     )
     f = lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").strftime("%H")
     ax.set_xticklabels(
@@ -78,22 +80,22 @@ def main():
     )
     ax.locator_params(nbins=4, axis="x")
     plt.savefig("energy.png", transparent=True, dpi=100)
+
     img = Image.new("P", inky_display.resolution)
     draw = ImageDraw.Draw(img)
     plot = Image.open("energy.png")
-    img.paste(plot, (-28, 26))
+    img.paste(plot, (-28, 45))
     draw.rectangle([(0, 0), (400, 55)], inky_display.BLACK)
-    draw.text((10, 10), "Agile tariff ", inky_display.WHITE, font=fonts.raleway_reg_30)
-    draw.text((160, 20), "p/kWh ", inky_display.WHITE, font=fonts.raleway_reg_20)
+    draw.text((10, 10), "Octopus Agile tariff", inky_display.WHITE, font=fonts.raleway_reg_30)
+    draw.text((338, 28), "p/kWh ", inky_display.WHITE, font=fonts.raleway_reg_15)
     draw.text(
-        (300, 10),
+        (330, 5),
         datetime.datetime.now().strftime("%d/%m"),
         inky_display.WHITE,
-        font=fonts.raleway_bold_30,
+        font=fonts.raleway_bold_20,
     )
     inky_display.set_image(img)
     inky_display.show()
-
 
 if __name__ == "__main__":
     main()

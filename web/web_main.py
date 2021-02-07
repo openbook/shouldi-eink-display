@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from configparser import ConfigParser
 import os, sys, inspect
+import re
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -17,11 +18,16 @@ app = Flask(__name__)
 
 @app.route("/", methods=("GET", "POST"))
 def index():
+    config.read("config.ini")
+    updated = False
     if request.method == "POST":
         display_type = request.form["display"]
-        config.read("config.ini")
         config.set("main", "display", display_type)
+        if display_type == "generation":
+            config.set("location", "postcode", request.form["postcode"].upper())
+            config.set("location", "placename", request.form["placename"])
         config.write(open("config.ini", "w"))
+
         if display_type == "combined":
             display_combined.main()
         elif display_type == "forecast":
@@ -31,7 +37,17 @@ def index():
         elif display_type == "generation":
             display_now.main()
 
-    return render_template("index.html")
+        updated = True
+
+    print(config.get("location", "placename"))
+
+    return render_template(
+        "index.html",
+        display=config.get("main", "display"),
+        placename=config.get("location", "placename"),
+        postcode=config.get("location", "postcode"),
+        updated=updated
+    )
 
 
 if __name__ == "__main__":
