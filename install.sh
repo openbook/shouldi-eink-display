@@ -22,4 +22,4 @@ line="5,35 * * * * cd $(pwd) && python3 display.py"
 # https://www.jeffgeerling.com/blogs/jeff-geerling/controlling-pwr-act-leds-raspberry-pi
 echo none | sudo tee /sys/class/leds/led0/trigger
 
-sudo shutdown -h now
+sudo reboot
