@@ -1,15 +1,19 @@
 # GB Renewable Forecast Display
+Using data from the National Grid's carbon intensity API & Octopus Agile Tariff API endpoints, this display aims to help you
+better plan when to use 
 
 ## Why
 Knowing 
 
-## Hardware components 
+## Components
 1. Raspberry Pi Zero
 2. Flash Memory card
 3. Inky eInk Display
-4. Case or 
+4. Case or
 
-## Raspberry Pi Setup
+## Install and setup
+
+### Raspberry Pi Setup
 
 ### 1. Flash pi with Raspberry Pi OS lite (no desktop)
 * Using something Raspberry Pi Imager is simplest.
@@ -27,7 +31,16 @@ password=raspberry
 ```
 
 ### 4. Run install script
-curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash
+* ` curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash`
+* When prompted enter Y to install the required inky libraries
+* When prompted 'Do you wish to perform a full install?' enter N 
 
-Enter y when prompted whether you want to install inky
-Enter n when prompted for full install
+### 
+
+### Optionally install web interface
+You can 
+
+
+## Frame
+
+### Licenses

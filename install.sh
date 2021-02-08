@@ -8,7 +8,7 @@ curl https://get.pimoroni.com/inky | bash
 
 ## Fetch the display repo code
 git clone https://github.com/openbook/shouldi-eink-display.git
-cd should-eink-display
+cd shouldi-eink-display
 
 ### pi specific pandas
 pip3 install pytz
