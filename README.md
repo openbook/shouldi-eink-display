@@ -139,7 +139,10 @@ This is a great professional looking case that's ready to buy and simple to inst
 
 
 ## To do
-* [] Add a physical button to switch between displays
-* [] Add more in depth view for agile pricing - show current, min and max prices 
-* [] Add a battery pack 
+- [ ] Add a physical button to switch between displays
+- [ ] Add error handling for all outgoing requests
+- [ ] Image uploader for custom screen of when generation is high and low
+- [ ] Move carbonintensitylib to pandas for consistency and to improve code qualityŒ  
+- [ ] Add more in depth view for agile pricing - show current, min and max prices 
+- [ ] Add a battery pack 
 
