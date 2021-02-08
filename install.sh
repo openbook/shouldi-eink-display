@@ -22,6 +22,4 @@ line="5,35 * * * * cd $(pwd) && python3 display.py"
 # https://www.jeffgeerling.com/blogs/jeff-geerling/controlling-pwr-act-leds-raspberry-pi
 echo none | sudo tee /sys/class/leds/led0/trigger
 
-# Update display
-cd /home/pi/shoudli-eink-display
-python3 display.py
+sudo shutdown -h now
