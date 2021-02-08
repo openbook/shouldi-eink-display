@@ -74,10 +74,8 @@ def main():
         legend=False,
         figsize=(4.75, 2.6),
     )
-    f = lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").strftime("%H")
-    ax.set_xticklabels(
-        labels=[f(x.get_text()) for x in ax.get_xticklabels()], rotation=0
-    )
+    xticks = ["0:00", "06:00", "12:00", "18:00"]
+    ax.set_xticklabels(xticks, rotation=0)
     ax.locator_params(nbins=4, axis="x")
     plt.savefig("energy.png", transparent=True, dpi=100)
 
