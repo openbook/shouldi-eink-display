@@ -16,3 +16,7 @@ pip3 install pytz
 line="*/30 * * * * $(pwd)/display.py"
 echo $line
 (crontab -u pi -l; echo "$line" ) | crontab -u pi -
+
+# Save a tiny bit more power by turning off the LED
+# https://www.jeffgeerling.com/blogs/jeff-geerling/controlling-pwr-act-leds-raspberry-pi
+echo none | sudo tee /sys/class/leds/led0/trigger
