@@ -21,3 +21,7 @@ line="5,35 * * * * cd $(pwd) && python3 display.py"
 # Save a tiny bit more power by turning off the LED
 # https://www.jeffgeerling.com/blogs/jeff-geerling/controlling-pwr-act-leds-raspberry-pi
 echo none | sudo tee /sys/class/leds/led0/trigger
+
+# Update display
+cd /home/pi/shoudli-eink-display
+python3 display.py
