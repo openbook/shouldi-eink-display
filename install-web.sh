@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install nginx
+sudo apt install nginx -y
 cd /home/pi/shouldi-eink-display
 
 pip3 install uwsgi flask
