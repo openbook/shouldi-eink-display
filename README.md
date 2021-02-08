@@ -18,8 +18,8 @@ Data is provided by the [National Grid's carbon intensity api](https://carbonint
 
 ### Raspberry Pi Setup
 
-I use a "headless" Raspberry Pi setup to install all the dependencies, which means we configure the wifi settings prior to powering the 
-Pi, enable SSH by default & therfore dont need to connect a display or a keyboard.
+I use a "headless" Raspberry Pi setup to install all the dependencies; we configure the wifi settings prior to powering on the 
+Pi & enable SSH by default, this mean we avoid having to connect a display or a keyboard.
 
 ### 1. Flash pi with Raspberry Pi OS lite (no desktop)
 * Use [Raspberry Pi Imager](https://www.raspberrypi.org/software/) 
