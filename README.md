@@ -91,7 +91,7 @@ Hopefully everything should be setup and working ok.
 
 Your display is set to update automatically at 5 & 35 minutes past each hour.  
 
-## [Displays](#displays)
+## [Screens](#displays)
 
 #### Combined current generation mix + renewable forecast
 ![Screenshot](./assets/thumbs/combined.jpg) 
