@@ -73,7 +73,7 @@ class CarbonIntensityForecastGB:
         data_out = {}
         gen = self.get_response_by_slot()
         for day, items in gen.items():
-            data_out[day] = max(items)
+            data_out[day] = max(items.items(), key=lambda k: k[1])
         return data_out
 
     def get_response_by_slot(self, return_type="total"):

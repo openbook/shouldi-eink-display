@@ -90,7 +90,7 @@ def main():
 
     date_now = datetime.datetime.now()
     draw.text(
-        (245, 280),
+        (305, 280),
         "Updated :" + date_now.strftime("%H:%M"),
         inky_display.BLACK,
         font=fonts.raleway_light_13,
