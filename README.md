@@ -63,8 +63,10 @@ password=raspberry
 ```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash```
 * When prompted enter Y to install the required inky libraries
 * When prompted 'Do you wish to perform a full install?' enter N 
+* Once the install script has finished, the Pi will be rebooted to ensure all the libraries are correctly loaded now that the inky display is connected.
 
-### 5. Set the display configuration
+### 5. SSH back in to the Pi & set the display configuration
+* First SSH back into the pi
 By default the 'combined' forecast and current generation mix is displayed.  Full info on each of the screens is [available here](#displays).
 You can update the display by changing the values found within the 'config.ini' that was downloaded as part of the setup:
 * Using a text update the contents of the file found at `/home/pi/shouldi-eink-display/config.ini`
@@ -75,12 +77,16 @@ You can update the display by changing the values found within the 'config.ini' 
     * generation - current renable generation mix for a local area
 * If selecting "agile" then the postcode and placename should be changed from the current values in the same file.  **Note** postcodes should be added using the first half only (e.g. for SW1A 0AA use SW1A)
 * see '#displays' for notes on each display screen
+* If everything has installed properly you should now be able to update the display by running the following command 
+```bash
+cd /home/pi/shouldi-eink-display && python3 display.py
+```
 
 
 ### 6. (Optionally) control the display config using a webform hosted on the Pi 
 ![Screenshot](./assets/thumbs/web.png)
 
-With a few more additions, you can also create a simple web form which will allow you to switch the current display view using a browser. 
+You can also setup and run a simple web form which will allow you to switch the current screen display using a browser. 
 
 * still using the SSH session, make sure you are in the project root folder `cd ~/shouldi-eink-display`
 * run `./install-web.sh` this will setup an nginx webserver and serve a simple flask based webapp that will allow you to update the config.ini file.
