@@ -11,7 +11,7 @@ if display_type == "combined":
     display_combined.main()
 elif display_type == "forecast":
     display_forecast.main()
-elif display_type == "octopus":
+elif display_type == "agile":
     display_octopus_agile.main()
 elif display_type == "generation":
     display_now.main()

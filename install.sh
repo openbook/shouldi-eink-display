@@ -1,5 +1,5 @@
 #!/bin/bash
-# curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash
+cd /home/pi
 sudo apt install git python3-pandas python3-pip python3-matplotlib msttcorefonts -yqq
 rm ~/.cache/matplotlib -rf
 

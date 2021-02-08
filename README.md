@@ -1,19 +1,11 @@
 # GB Renewable Forecast Display
-Using data from the National Grid's carbon intensity this Raspberry Pi powered eInk display aims
-to give you a quick way to time your home energy usage to help balance the grid, reduce carbon emissions (& if you're an agile tariff user, save money)
+![Screenshot](./assets/thumbs/combined.jpg) ![Screenshot](./assets/thumbs/baking_forecast.jpg) ![Screenshot](./assets/thumbs/agile.jpg) ![Screenshot](./assets/thumbs/local.jpg)
 
-This project takes the same approach as shouldibake.com and the Baking Forecast to give you quick visual 
-aid when making that decision, showing you when to renewable generation is above or below 33%.
+This Raspberry Pi powered eInk display aims to give you a quick way to time your home energy usage to help balance the grid, reduce carbon emissions, and if you're an [agile tariff user](https://octopus.energy/agile/), save money.
 
-## Why
-We include solar, wind and hydro in our definition of renewable generation.  Relying on the weather for our energy means there will naturally be peaks and troughs 
-both in terms of how much energy is generated, but also because we use different amounts of energy during the day. 
+The project takes the same approach as [shouldibake.com](http://shouldibake.com/) and the [Baking Forecast GB](https://twitter.com/baking4cast) to give you quick visual aid when making that decision, showing you when to renewable generation is above or below 33%.
 
-By timing when we bake, hoover, use the washing machine, charge our cars or batteries to coincide with when renewable generation is highest we can:
-1. help the National Grid balance demand and reduce the carbon emission 
-2. (if you're using one of the increasingly prevalent [agile pricing tariffs](https://octopus.energy/agile/)) rely on cheaper prices to save money.
-
-Every little helps!
+Data is provided by the [National Grid's carbon intensity api](https://carbonintensity.org.uk/) and [Octopus Energy's Agile tariff pricing API](https://developer.octopus.energy/docs/api/#list-tariff-charges)
 
 ## Components
 1. Raspberry Pi Zero soldered (~£14) ([piehut](https://thepihut.com/products/raspberry-pi-zero-wh-with-pre-soldered-header) | [pimoroni](https://shop.pimoroni.com/products/raspberry-pi-zero-wh-with-pre-soldered-header))
@@ -26,15 +18,19 @@ Every little helps!
 
 ### Raspberry Pi Setup
 
+I use a "headless" Raspberry Pi setup to install all the dependencies, which means we configure the wifi settings prior to powering the 
+Pi on & enable SSH by default.  This means we dont need to connect a monitor or keyboard to the Pi, but will require a SSH client on whichever machine you use
+run through these steps.
+
 ### 1. Flash pi with Raspberry Pi OS lite (no desktop)
 * Use [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to copy the Raspberry Pi OS image to the SD card 
 * Select SD card
-* Choose "Raspberry Pi OS (other)" > "Raspberry Pi OS Lite (32-bit)" (we wont require a GUI desktop)
-* Select write
+* Choose "Raspberry Pi OS (other)" > "Raspberry Pi OS Lite (32-bit)" (we dont require a GUI desktop)
+* Select write & wait for the OS to be written to the SD card.
 
 ### 2. Configure Wifi & Enable SSH (create file /Volumes/boot/ssh)
-* Once the Rapsberry Pi OS image has been saved to the SD card, open a file client so that you can view the contents of the 'boot' folder
-* Create a new file `wpa_supplicant.conf` in the boot folder & add the following, adding your SSID and password for your wifi network
+* Once the Rapsberry Pi OS image has been saved to the SD card, open a file window so that you can view the contents of the 'boot' folder
+* Create a new file `wpa_supplicant.conf` in the root of the boot folder & add the following, replacing the relevant sections with your SSID and password for your wifi network
 ```
   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
   network={
@@ -44,26 +40,63 @@ Every little helps!
   }
 ```
 Example file: [conf/wpa_supplicant.conf](https://github.com/openbook/shouldi-eink-display/blob/main/conf/wpa_supplicant.conf)
-* Create an empty file called 'ssh' in the boot directory, this will enable SSD by default when you first power up the pi
+* Finally create an empty file called 'ssh' (without a file extension) in the boot directory, this will enable SSD by default when you first power up the pi
   
 ### 3. Power up the pi and SSH onto the device
-* Plug the pi in 
-```
+* Insert the SD card into the Raspberry Pi
+* Install the Raspberry Pi into the back of the Inky display
+* Power on the Pi & wait for ~2 minutes whilst the operating system boots up.  
+* If this is the only Raspberry Pi on your network you'll able to access the Pi using the following SSH command  
+```bash
 ssh pi@raspberrypi.local
 password=raspberry
 ```
+otherwise, you will need to find the IP of your Pi via your local network router then start a SSH session using
+```bash
+ssh pi@[IP ADDRESS]
+password=raspberry
+```
 
-### 4. Run install script
-* ` curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash`
+### 4. Run the install script
+* In your SSH terminal, ensure you're first in the pi user's home directory by running `cd ~/`
+* Snstall the dependencies for the Inky display & the api/drawing libraries by running the following command 
+  
+```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash```
 * When prompted enter Y to install the required inky libraries
 * When prompted 'Do you wish to perform a full install?' enter N 
 
 ### 5. Set the display configuration
+By default the 'combined' forecast and current generation mix is displayed.  You can update the by changing the values found within the 'config.ini' that was downloaded as part of the setup:
+* Using a text update the contents of the file found at `/home/pi/shouldi-eink-display/config.ini`
+* Update the `display = combined` line choosing one of the following options:
+    * combined - renewable forecast plus current generation mix
+    * forecast - the full "should i bake" forecast
+    * agile - agile tariff hourly prices for the current day
+    * generation - current renable generation mix for a local area
+* If selecting "agile" then the postcode and placename should be changed from the current values in the same file.  **Note** postcodes should be added using the first half only (e.g. for SW1A 0AA use SW1A)
+* see '#displays' for notes on each display screen
 
-### 6. (Optionally) install web interface so you can change the display from a browser
-You can 
 
+### 6. (Optionally) control the display config using a webform hosted on the Pi 
+![Screenshot](./assets/thumbs/web.png)
+
+With a few more additions, you can also create a simple web form which will allow you to switch the current display view using a browser. 
+
+* still using the SSH session, make sure you are in the pi user's home directory `cd ~/`
+* run `./install-web.sh` this will setup an nginx webserver and serve a simple flask based webapp that will allow you to update the config.ini file.
+* Once the install script has finished, it should confirm the IP address of your Pi - you can then open that IP address in a browser to access the web interface shown above 
+
+### Done
+Your display will update at 5 & 35 minutes past each hour.  
+
+### Displays
 
 ## Frame
+
+## To do
+* [] Add a physical button to switch between displays
+* [] Add more in depth view for agile pricing - show current, min and max prices 
+* [] Add a battery pack 
+
 
 ### Licenses
