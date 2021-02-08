@@ -1,0 +1,12 @@
+[Unit]
+Description=uWSGI instance to serve myproject
+After=network.target
+
+[Service]
+User=pi
+Group=www-data
+WorkingDirectory=/home/pi/shouldi-eink-display
+ExecStart=/home/pi/.local/bin/uwsgi --ini /home/pi/shouldi-eink-display/wsgi.ini
+
+[Install]
+WantedBy=multi-user.target
