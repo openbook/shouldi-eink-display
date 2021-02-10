@@ -43,17 +43,18 @@ Example file: [conf/wpa_supplicant.conf](https://github.com/openbook/shouldi-ein
   
 ### 3. Power on the pi and SSH onto the device
 * Insert the SD card into the Raspberry Pi
-* Install the Raspberry Pi into the back of the Inky display
+* Install the Raspberry Pi into the back of the Inky display - align the Pi, with the 40 GPIO pins pointing down, to the top right hand corner of the back of the Inky display and gently push the the GPIO pins into the black connector.  [See an image of the reverse of display](./assets/thumbs/reverse.jpg).
 * Power on the Pi & wait for ~2 minutes whilst the operating system boots up.  
-* If this is the only Raspberry Pi on your network you'll able to access the Pi using the device's hostname with following SSH command  
+* At this point you'll need to create a SSH connection to the Pi from your current laptop/desktop.  You can read more about [SSH (Secure Shell) & find a client for you machine here](https://www.raspberrypi.org/documentation/remote-access/ssh/)
+* If this is the only Raspberry Pi on your network you'll be able to access the Pi using the device's hostname with following SSH command which should be run on
 ```bash
 ssh pi@raspberrypi.local
-password=raspberry
+# password is 'raspberry'
 ```
 otherwise, you will need to find the IP of your Pi via your local network router then start a SSH session using
 ```bash
 ssh pi@[IP ADDRESS]
-password=raspberry
+# password is 'raspberry'
 ```
 
 ### 4. Run the install script
@@ -67,7 +68,7 @@ password=raspberry
 
 ### 5. SSH back in to the Pi & set the display configuration
 * First SSH back into the pi
-By default the 'combined' forecast and current generation mix is displayed.  Full info on each of the screens is [available here](#displays).
+* By default the 'combined' forecast and current generation mix is displayed.  Full info on each of the screens is [available here](#displays).
 You can update the display by changing the values found within the 'config.ini' that was downloaded as part of the setup:
 * Using a text update the contents of the file found at `/home/pi/shouldi-eink-display/config.ini`
 * Update the `display = combined` line choosing one of the following options:
@@ -150,5 +151,5 @@ This is a great professional looking case that's ready to buy and simple to inst
 - [ ] Image uploader for custom screen of when generation is high and low
 - [ ] Move carbonintensitylib to pandas for consistency and to improve code qualityŒ  
 - [ ] Add more in depth view for agile pricing - show current, min and max prices 
-- [ ] Add a battery pack 
+- [ ] Add a battery pack & [power management](https://thepihut.com/products/wittypi-mini-rtc-power-management-for-raspberry-pi#:~:text=WittyPi%20Mini%20is%20the%20new,OFF%20sequence%20with%20simple%20script.)
 
