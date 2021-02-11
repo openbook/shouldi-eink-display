@@ -3,13 +3,13 @@ import sys
 import os
 import datetime
 import requests
+import pandas as pd
+from pandas.io.json import json_normalize
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import io
 from PIL import ImageOps, Image, ImageFont, ImageDraw
 from inky.auto import auto
-import pandas as pd
-from pandas.io.json import json_normalize
-import matplotlib.dates as mdates
 
 if os.path.exists("lib"):
     sys.path.append("lib")
