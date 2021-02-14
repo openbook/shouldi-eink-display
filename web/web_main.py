@@ -8,7 +8,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 import display_combined
 import display_forecast
-import display_octopus_agile
+import display_agile_daily
 import display_now
 
 config = ConfigParser()
@@ -33,7 +33,7 @@ def index():
         elif display_type == "forecast":
             display_forecast.main()
         elif display_type == "agile":
-            display_octopus_agile.main()
+            display_agile_daily.main()
         elif display_type == "generation":
             display_now.main()
 
