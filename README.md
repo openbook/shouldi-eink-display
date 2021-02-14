@@ -44,7 +44,7 @@ Pi & enable SSH by default, this mean we avoid having to connect a display or a 
 Example file: [conf/wpa_supplicant.conf](https://github.com/openbook/shouldi-eink-display/blob/main/conf/wpa_supplicant.conf)
 * Finally create an empty file called 'ssh' (without a file extension) in the boot directory, this will enable SSH by default when you first power on the pi
   
-### 3. Power on the pi and SSH onto the device
+### 3. Insert the SD into the Pi, install the Pi into the Inky display & boot
 * Insert the SD card into the Raspberry Pi
 * Install the Raspberry Pi into the back of the Inky display - align the Pi, with the 40 GPIO pins pointing down, to the top right hand corner of the back of the Inky display and gently push the the GPIO pins into the black connector.  [See an image of the reverse of display](./assets/thumbs/reverse.jpg).
 * Power on the Pi & wait for ~2 minutes whilst the operating system boots up.  
