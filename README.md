@@ -24,7 +24,7 @@ Following the steps in this repository requires minimal input from you - all the
 I use a "headless" Raspberry Pi setup to install all the dependencies; we configure the wifi settings prior to powering on the 
 Pi & enable SSH by default, this mean we avoid having to connect a display or a keyboard.
 
-### 1. Flash pi with Raspberry Pi OS lite (no desktop)
+### 1. Flash SD card with Raspberry Pi OS lite (no desktop)
 * Use [Raspberry Pi Imager](https://www.raspberrypi.org/software/) 
 * Select SD card
 * Choose "Raspberry Pi OS (other)" > "Raspberry Pi OS Lite (32-bit)" (we dont require a GUI desktop)
