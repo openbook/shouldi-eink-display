@@ -8,7 +8,7 @@ The project takes the same approach as [shouldibake.com](http://shouldibake.com/
 Data is provided by the [National Grid's carbon intensity api](https://carbonintensity.org.uk/) and [Octopus Energy's Agile tariff pricing API](https://developer.octopus.energy/docs/api/#list-tariff-charges).
 
 ## Install and setup
-Following the steps in this repository requires minimal input from you - all the required Inky libraries & code to display the screens is downloaded and setup on your pi for you.  You will need an [SSH client](https://www.raspberrypi.org/documentation/remote-access/ssh/) in order to connect to the pi, but all of the SSH commands you need are listed on this page.
+Following the steps in this repository requires minimal input - all the required Inky libraries & code to display the screens is downloaded and setup on your pi when you run the install commands.  You will need an [SSH client](https://www.raspberrypi.org/documentation/remote-access/ssh/) in order to connect to the pi, but all of the SSH commands you need are listed on this page.
 - time required: ~30mins
 - cost of the components: ~£70
 
