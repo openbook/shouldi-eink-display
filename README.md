@@ -71,6 +71,7 @@ Then enter and confirm your new password
 * Install the dependencies for both the Inky display & the api/drawing libraries by running the following command 
   
 ```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash```
+**Note** this command runs the [install file found within this repository](install.sh), so you can check exactly what's being installed if you need to.
 * When prompted enter Y to install the required inky libraries
 * When prompted 'Do you wish to perform a full install?' enter N 
 * Once the install script has finished, the Pi will be rebooted to ensure all the libraries are correctly loaded now that the inky display is connected.
