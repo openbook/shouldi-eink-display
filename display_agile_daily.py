@@ -17,9 +17,11 @@ from configparser import ConfigParser
 
 
 import fonts
+
 imgdir = os.path.join(
     os.path.dirname(os.path.dirname(os.path.relpath(__file__))), "assets"
 )
+
 
 def main():
     inky_display = auto()
@@ -47,7 +49,7 @@ def main():
     plt.tight_layout()
     figure = plt.gcf()  # get current figure
     ax = plt.gca()
-    ax.margins(x=0,y=0)
+    ax.margins(x=0, y=0)
     df.plot(
         kind="bar",
         x="valid_from",
@@ -67,7 +69,9 @@ def main():
     plot = Image.open("energy.png")
     img.paste(plot, (-28, 45))
     draw.rectangle([(0, 0), (400, 55)], inky_display.BLACK)
-    draw.text((10, 10), "Octopus Agile tariff", inky_display.WHITE, font=fonts.raleway_reg_30)
+    draw.text(
+        (10, 10), "Octopus Agile tariff", inky_display.WHITE, font=fonts.raleway_reg_30
+    )
     draw.text((338, 28), "p/kWh ", inky_display.WHITE, font=fonts.raleway_reg_15)
     draw.text(
         (330, 5),
@@ -77,6 +81,7 @@ def main():
     )
     inky_display.set_image(img)
     inky_display.show()
+
 
 if __name__ == "__main__":
     main()

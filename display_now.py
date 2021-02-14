@@ -56,14 +56,14 @@ def main():
 
     rhs_start = 215
     font = fonts.raleway_reg_50
-    x,y = font.getsize(placename)
-    if (x > 180):
+    x, y = font.getsize(placename)
+    if x > 180:
         font = fonts.raleway_reg_40
-        x,y = font.getsize(placename)
-        if (x > 180):
+        x, y = font.getsize(placename)
+        if x > 180:
             font = fonts.raleway_reg_30
-            x,y = font.getsize(placename)
-            if (x > 180):
+            x, y = font.getsize(placename)
+            if x > 180:
                 font = fonts.raleway_reg_20
 
     draw.text((rhs_start, 10), placename, inky_display.BLACK, font=font)

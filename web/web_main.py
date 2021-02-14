@@ -46,7 +46,7 @@ def index():
         display=config.get("main", "display"),
         placename=config.get("location", "placename"),
         postcode=config.get("location", "postcode"),
-        updated=updated
+        updated=updated,
     )
 
 
