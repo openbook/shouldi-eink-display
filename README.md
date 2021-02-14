@@ -5,7 +5,12 @@ This Raspberry Pi powered eInk display aims to give you a quick way to time your
 
 The project takes the same approach as [shouldibake.com](http://shouldibake.com/) and the [Baking Forecast GB](https://twitter.com/baking4cast) to give you quick visual aid when making that decision, showing you when renewable generation is above or below 33%.
 
-Data is provided by the [National Grid's carbon intensity api](https://carbonintensity.org.uk/) and [Octopus Energy's Agile tariff pricing API](https://developer.octopus.energy/docs/api/#list-tariff-charges)
+Data is provided by the [National Grid's carbon intensity api](https://carbonintensity.org.uk/) and [Octopus Energy's Agile tariff pricing API](https://developer.octopus.energy/docs/api/#list-tariff-charges).
+
+## Install and setup
+Following the steps in this repository requires minimal input from you - all the required Inky libraries & code to display the screens is downloaded and setup on your pi for you.  You will need an [SSH client](https://www.raspberrypi.org/documentation/remote-access/ssh/) in order to connect to the pi, but all of the SSH commands you need are listed on this page.
+- time required: ~30mins
+- cost of the components: ~£70
 
 ## Components
 1. Raspberry Pi Zero soldered (~£14) ([piehut](https://thepihut.com/products/raspberry-pi-zero-wh-with-pre-soldered-header) | [pimoroni](https://shop.pimoroni.com/products/raspberry-pi-zero-wh-with-pre-soldered-header))
@@ -13,8 +18,6 @@ Data is provided by the [National Grid's carbon intensity api](https://carbonint
 3. Inky wHAT (ePaper/eInk/EPD) - Black/White (£45) ([piehut](https://thepihut.com/products/inky-what-epaper-eink-epd-black-white) | [pimoroni](https://shop.pimoroni.com/products/inky-what?variant=21214020436051))
 4. Power supply - micro USB connection ([piehut](https://thepihut.com/products/official-raspberry-pi-universal-power-supply) | [pimoroni](https://shop.pimoroni.com/products/raspberry-pi-universal-power-supply) - or use an existing cable) 
 5. [Case](#case) (see notes below)
-
-## Install and setup
 
 ### Raspberry Pi Setup
 
@@ -27,9 +30,9 @@ Pi & enable SSH by default, this mean we avoid having to connect a display or a 
 * Choose "Raspberry Pi OS (other)" > "Raspberry Pi OS Lite (32-bit)" (we dont require a GUI desktop)
 * Select write & wait for the OS to be written to the SD card.
 
-### 2. Configure Wifi & Enable SSH (create file /Volumes/boot/ssh)
+### 2. Configure Wifi & Enable SSH
 * Once the Rapsberry Pi OS image has been saved to the SD card, open a file window so that you can view the contents of the SD card's 'boot' folder
-* Create a new file `wpa_supplicant.conf` in the root of the boot folder & add the following, replacing the relevant sections with your SSID and password for your wifi network
+* Create a new file `wpa_supplicant.conf` in the root of the boot folder & add the following, replacing the relevant sections with the SSID and password of your wifi network
 ```
   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
   network={
@@ -45,7 +48,7 @@ Example file: [conf/wpa_supplicant.conf](https://github.com/openbook/shouldi-ein
 * Insert the SD card into the Raspberry Pi
 * Install the Raspberry Pi into the back of the Inky display - align the Pi, with the 40 GPIO pins pointing down, to the top right hand corner of the back of the Inky display and gently push the the GPIO pins into the black connector.  [See an image of the reverse of display](./assets/thumbs/reverse.jpg).
 * Power on the Pi & wait for ~2 minutes whilst the operating system boots up.  
-* At this point you'll need to create a SSH connection to the Pi from your current laptop/desktop.  You can read more about [SSH (Secure Shell) & find a client for you machine here](https://www.raspberrypi.org/documentation/remote-access/ssh/)
+* At this point you'll need to create an SSH connection to the Pi from your laptop/desktop.  You can read more about [SSH (Secure Shell) & find a client for your machine here](https://www.raspberrypi.org/documentation/remote-access/ssh/)
 * If this is the only Raspberry Pi on your network you'll be able to access the Pi using the device's hostname with following SSH command which should be run on
 ```bash
 ssh pi@raspberrypi.local
@@ -56,6 +59,12 @@ otherwise, you will need to find the IP of your Pi via your local network router
 ssh pi@[IP ADDRESS]
 # password is 'raspberry'
 ```
+* Once your ssh connetion has been established the first thing you should do is update the password - the Pi OS ships with a default password, and it's always best to change this before going any further.  To change your password run:
+```bash
+passwd
+```
+Then enter and confirm your new password
+
 
 ### 4. Run the install script
 * In your SSH terminal, ensure you're first in the pi user's home directory by running `cd ~/`
@@ -65,12 +74,13 @@ ssh pi@[IP ADDRESS]
 * When prompted enter Y to install the required inky libraries
 * When prompted 'Do you wish to perform a full install?' enter N 
 * Once the install script has finished, the Pi will be rebooted to ensure all the libraries are correctly loaded now that the inky display is connected.
+* Once the pi has rebooted, if everything has been installed correctly, the Inky screen should update to display the default 'combined' screen.
 
 ### 5. SSH back in to the Pi & set the display configuration
 * First SSH back into the pi
 * By default the 'combined' forecast and current generation mix is displayed.  Full info on each of the screens is [available here](#displays).
 You can update the display by changing the values found within the 'config.ini' that was downloaded as part of the setup:
-* Using a text update the contents of the file found at `/home/pi/shouldi-eink-display/config.ini`
+* Using a text editor update the contents of the file found at `/home/pi/shouldi-eink-display/config.ini`
 * Update the `display = combined` line choosing one of the following options:
     * combined - renewable forecast plus current generation mix
     * forecast - the full "should i bake" forecast
@@ -78,13 +88,8 @@ You can update the display by changing the values found within the 'config.ini' 
     * generation - current renable generation mix for a local area
 * If selecting "agile" then the postcode and placename should be changed from the current values in the same file.  **Note** postcodes should be added using the first half only (e.g. for SW1A 0AA use SW1A)
 * see '#displays' for notes on each display screen
-* If everything has installed properly you should now be able to update the display by running the following command 
-```bash
-cd /home/pi/shouldi-eink-display && python3 display.py
-```
 
-
-### 6. (Optionally) control the display config using a webform hosted on the Pi 
+### 6. Setup the web interface
 ![Screenshot](./assets/thumbs/web.png)
 
 You can also setup and run a simple web form which will allow you to switch the current screen display using a browser. 
