@@ -3,16 +3,19 @@ import sys
 import os
 import datetime
 import requests
-import pandas as pd
-from pandas.io.json import json_normalize
+
+if os.path.exists("lib"):
+    sys.path.append("lib")
+from agile import OctopusAgileTariff
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import io
 from PIL import ImageOps, Image, ImageFont, ImageDraw
 from inky.auto import auto
+from configparser import ConfigParser
 
-if os.path.exists("lib"):
-    sys.path.append("lib")
+
 import fonts
 imgdir = os.path.join(
     os.path.dirname(os.path.dirname(os.path.relpath(__file__))), "assets"
@@ -20,30 +23,11 @@ imgdir = os.path.join(
 
 def main():
     inky_display = auto()
-    BASE_URL = "https://api.octopus.energy/v1/products/AGILE-18-02-21/electricity-tariffs/E-1R-AGILE-18-02-21-C/standard-unit-rates/"
-    params = {}
-    params["period_from"] = (
-        datetime.datetime.now()
-        .replace(hour=0, minute=0, second=0, microsecond=0)
-        .strftime("%Y-%m-%dT%H:%MZ")
-    )
-    params["period_to"] = (
-        datetime.datetime.now()
-        .replace(hour=23, minute=0, second=0, microsecond=0)
-        .strftime("%Y-%m-%dT%H:%MZ")
-    )
-    response_forecast = requests.request(method="GET", url=BASE_URL, params=params)
-    response = response_forecast.json()
-
-    if response_forecast.status_code != 200:
-        print("Error")
-
-    x = []
-    y = []
-
-    df = json_normalize(response["results"])
-    df["valid_from"] = pd.to_datetime(df["valid_from"])
-    df = df.set_index("valid_from").resample("60min").mean().reset_index("valid_from")
+    config = ConfigParser()
+    config.read("config.ini")
+    region = config.get("agile", "region")
+    agile_data = OctopusAgileTariff(region=region)
+    df = agile_data.get_df()
 
     plt.style.use("ggplot")
     COLOR = "black"
@@ -59,7 +43,6 @@ def main():
     plt.rcParams["axes.spines.top"] = False
     plt.rcParams["axes.spines.bottom"] = False
     plt.rcParams.update({"font.size": 13})
-    x_pos = [i for i, _ in enumerate(x)]
     plt.figure(frameon=False)
     plt.tight_layout()
     figure = plt.gcf()  # get current figure

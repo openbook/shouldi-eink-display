@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 import display_combined
 import display_forecast
-import display_octopus_agile
+import display_agile_daily
 import display_now
 
 config = ConfigParser()
@@ -12,6 +12,6 @@ if display_type == "combined":
 elif display_type == "forecast":
     display_forecast.main()
 elif display_type == "agile":
-    display_octopus_agile.main()
+    display_agile_daily.main()
 elif display_type == "generation":
     display_now.main()

@@ -15,7 +15,9 @@ pip3 install pytz
 # Add cron schedule
 sudo touch /var/spool/cron/pi
 sudo /usr/bin/crontab /var/spool/cron/pi
-line="5,35 * * * * cd $(pwd) && python3 display.py"
+line="5,35 * * * * cd $(pwd) && python3 display.py
+@reboot cd $(pwd) && python3 display.py"
+
 (crontab -u pi -l; echo "$line" ) | crontab -u pi -
 
 # Save a tiny bit more power by turning off the LED
