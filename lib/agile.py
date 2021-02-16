@@ -2,6 +2,8 @@ import datetime
 import requests
 import pandas as pd
 from pandas.io.json import json_normalize
+import pytz, datetime
+tz = pytz.timezone("Europe/London")
 
 
 class OctopusAgileTariff:
@@ -10,20 +12,26 @@ class OctopusAgileTariff:
             reg=region
         )
         self.df = {}
+        self.adjust_time = (
+            True
+            if tz.utcoffset(datetime.datetime.now().now()).total_seconds() > 0
+            else False
+        )
+        self.date_start = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        self.date_end = datetime.datetime.now().replace(hour=23, minute=0, second=0, microsecond=0)
+        self.set_date_range()
         self.fetch_data()
+
+    def set_date_range(self):
+        now = datetime.datetime.now()
+        if (now.hour >= 16) :
+            self.date_start = datetime.datetime.now().replace(hour=16, minute=0, second=0, microsecond=0)
+            self.date_end = self.date_start + datetime.timedelta(days=1)
 
     def fetch_data(self):
         params = {}
-        params["period_from"] = (
-            datetime.datetime.now()
-            .replace(hour=0, minute=0, second=0, microsecond=0)
-            .strftime("%Y-%m-%dT%H:%MZ")
-        )
-        params["period_to"] = (
-            datetime.datetime.now()
-            .replace(hour=23, minute=0, second=0, microsecond=0)
-            .strftime("%Y-%m-%dT%H:%MZ")
-        )
+        params["period_from"] = (self.date_start.strftime("%Y-%m-%dT%H:%MZ"))
+        params["period_to"] = (self.date_end.strftime("%Y-%m-%dT%H:%MZ"))
         response_forecast = requests.request(
             method="GET", url=self.base_url, params=params
         )

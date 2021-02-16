@@ -59,9 +59,9 @@ def main():
         legend=False,
         figsize=(4.75, 2.6),
     )
-    xticks = ["0:00", "06:00", "12:00", "18:00"]
+    xticks = ["16:00", "20:00", "00:00", "04:00", "08:00", "12:00"] if datetime.datetime.now().hour >= 16 else ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"]
     ax.set_xticklabels(xticks, rotation=0)
-    ax.locator_params(nbins=4, axis="x")
+    ax.locator_params(nbins=6, axis="x")
     plt.savefig("energy.png", transparent=True, dpi=100)
 
     img = Image.new("P", inky_display.resolution)
