@@ -59,13 +59,16 @@ def main():
         color="black",
         legend=False,
         figsize=(4.75, 2.6),
+        linestyle='dashed'
     )
     # manually build the x axis based on the start/end request made to the Agile API
     x_axis_labels = []
-    start = agile_data.date_start.hour
-    while (start <= agile_data.date_end.hour):
-        x_axis_labels.append("{hour}:00".format(hour=start))
-        start += 4
+    start = agile_data.date_start
+    while (start <= agile_data.date_end):
+        hours_added = datetime.timedelta(hours = 4)
+        x_axis_labels.append("{hour}:00".format(hour=start.hour))
+        start = start + hours_added
+
     ax.set_xticklabels(x_axis_labels, rotation=0)
     ax.locator_params(nbins=6, axis="x")
     plt.savefig("energy.png", transparent=True, dpi=100)
