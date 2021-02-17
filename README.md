@@ -70,8 +70,8 @@ Then enter and confirm your new password
 * In your SSH terminal, ensure you're first in the pi user's home directory by running `cd ~/`
 * Install the dependencies for both the Inky display & the api/drawing libraries by running the following command 
   
-```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash```
-**Note** this command runs the [install file found within this repository](install.sh), so you can check exactly what's being installed if you need to.
+```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/setup/install.sh | bash```
+**Note** this command runs the [install file found within this repository](setup/install.sh), so you can check exactly what's being installed if you need to.
 * When prompted enter Y to install the required inky libraries
 * When prompted 'Do you wish to perform a full install?' enter N 
 * Once the install script has finished, the Pi will be rebooted to ensure all the libraries are correctly loaded now that the inky display is connected.
@@ -96,7 +96,7 @@ You can update the display by changing the values found within the 'config.ini' 
 You can also setup and run a simple web form which will allow you to switch the current screen display using a browser. 
 
 * still using the SSH session, make sure you are in the project root folder `cd ~/shouldi-eink-display`
-* run `./install-web.sh` this will setup an nginx webserver and serve a simple flask based webapp that will allow you to update the config.ini file.
+* run `./setup/install-web.sh` this will setup an nginx webserver and serve a simple flask based webapp that will allow you to update the config.ini file.
 * Once the install script has finished, it should confirm the IP address of your Pi - you can then open that IP address in a browser to access the web interface shown above 
 
 ### 7. :tada: Done
