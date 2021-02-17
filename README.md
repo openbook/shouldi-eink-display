@@ -49,7 +49,7 @@ Example file: [conf/wpa_supplicant.conf](https://github.com/openbook/shouldi-ein
 * Install the Raspberry Pi into the back of the Inky display - align the Pi, with the 40 GPIO pins pointing down, to the top right hand corner of the back of the Inky display and gently push the the GPIO pins into the black connector.  [See an image of the reverse of display](./assets/thumbs/reverse.jpg).
 * Power on the Pi & wait for ~2 minutes whilst the operating system boots up.  
 * At this point you'll need to create an SSH connection to the Pi from your laptop/desktop.  You can read more about [SSH (Secure Shell) & find a client for your machine here](https://www.raspberrypi.org/documentation/remote-access/ssh/)
-* If this is the only Raspberry Pi on your network you'll be able to access the Pi using the device's hostname with following SSH command which should be run on
+* If this is the only Raspberry Pi on your network you'll be able to access the Pi using the device's hostname with following SSH command
 ```bash
 ssh pi@raspberrypi.local
 # password is 'raspberry'
