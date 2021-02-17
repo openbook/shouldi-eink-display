@@ -44,12 +44,12 @@ Pi & enable SSH by default, this mean we avoid having to connect a display or a 
 Example file: [conf/wpa_supplicant.conf](https://github.com/openbook/shouldi-eink-display/blob/main/conf/wpa_supplicant.conf)
 * Finally create an empty file called 'ssh' (without a file extension) in the boot directory, this will enable SSH by default when you first power on the pi
   
-### 3. Power on the pi and SSH onto the device
+### 3. Insert the SD into the Pi, install the Pi into the Inky display & boot
 * Insert the SD card into the Raspberry Pi
 * Install the Raspberry Pi into the back of the Inky display - align the Pi, with the 40 GPIO pins pointing down, to the top right hand corner of the back of the Inky display and gently push the the GPIO pins into the black connector.  [See an image of the reverse of display](./assets/thumbs/reverse.jpg).
 * Power on the Pi & wait for ~2 minutes whilst the operating system boots up.  
 * At this point you'll need to create an SSH connection to the Pi from your laptop/desktop.  You can read more about [SSH (Secure Shell) & find a client for your machine here](https://www.raspberrypi.org/documentation/remote-access/ssh/)
-* If this is the only Raspberry Pi on your network you'll be able to access the Pi using the device's hostname with following SSH command which should be run on
+* If this is the only Raspberry Pi on your network you'll be able to access the Pi using the device's hostname with following SSH command
 ```bash
 ssh pi@raspberrypi.local
 # password is 'raspberry'
@@ -70,7 +70,8 @@ Then enter and confirm your new password
 * In your SSH terminal, ensure you're first in the pi user's home directory by running `cd ~/`
 * Install the dependencies for both the Inky display & the api/drawing libraries by running the following command 
   
-```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/install.sh | bash```
+```curl https://raw.githubusercontent.com/openbook/shouldi-eink-display/main/setup/install.sh | bash```
+**Note** this command runs the [install file found within this repository](setup/install.sh), so you can check exactly what's being installed if you need to.
 * When prompted enter Y to install the required inky libraries
 * When prompted 'Do you wish to perform a full install?' enter N 
 * Once the install script has finished, the Pi will be rebooted to ensure all the libraries are correctly loaded now that the inky display is connected.
@@ -95,7 +96,7 @@ You can update the display by changing the values found within the 'config.ini' 
 You can also setup and run a simple web form which will allow you to switch the current screen display using a browser. 
 
 * still using the SSH session, make sure you are in the project root folder `cd ~/shouldi-eink-display`
-* run `./install-web.sh` this will setup an nginx webserver and serve a simple flask based webapp that will allow you to update the config.ini file.
+* run `./setup/install-web.sh` this will setup an nginx webserver and serve a simple flask based webapp that will allow you to update the config.ini file.
 * Once the install script has finished, it should confirm the IP address of your Pi - you can then open that IP address in a browser to access the web interface shown above 
 
 ### 7. :tada: Done
