@@ -10,6 +10,7 @@ from agile import OctopusAgileTariff
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import numpy as np
 import io
 from PIL import ImageOps, Image, ImageFont, ImageDraw
 from inky.auto import auto
@@ -59,8 +60,13 @@ def main():
         legend=False,
         figsize=(4.75, 2.6),
     )
-    xticks = ["16:00", "20:00", "00:00", "04:00", "08:00", "12:00"] if datetime.datetime.now().hour >= 16 else ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"]
-    ax.set_xticklabels(xticks, rotation=0)
+    # manually build the x axis based on the start/end request made to the Agile API
+    x_axis_labels = []
+    start = agile_data.date_start.hour
+    while (start <= agile_data.date_end.hour):
+        x_axis_labels.append("{hour}:00".format(hour=start))
+        start += 4
+    ax.set_xticklabels(x_axis_labels, rotation=0)
     ax.locator_params(nbins=6, axis="x")
     plt.savefig("energy.png", transparent=True, dpi=100)
 

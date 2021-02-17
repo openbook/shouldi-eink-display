@@ -25,8 +25,9 @@ class OctopusAgileTariff:
     def set_date_range(self):
         now = datetime.datetime.now()
         if (now.hour >= 16) :
-            self.date_start = datetime.datetime.now().replace(hour=16, minute=0, second=0, microsecond=0)
-            self.date_end = self.date_start + datetime.timedelta(days=1)
+            self.date_start = datetime.datetime.now().replace(hour=now.hour, minute=0, second=0, microsecond=0)
+            date_end = self.date_start + datetime.timedelta(days=1)
+            self.date_end = date_end.replace(hour=now.hour, minute=0, second=0, microsecond=0)
 
     def fetch_data(self):
         params = {}
