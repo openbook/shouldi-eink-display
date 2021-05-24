@@ -36,10 +36,11 @@ class OctopusAgileTariff:
         response_forecast = requests.request(
             method="GET", url=self.base_url, params=params
         )
+        if response_forecast.status_code != 200:
+            raise ValueError
+
         response = response_forecast.json()
 
-        if response_forecast.status_code != 200:
-            print("Error")
 
         df = json_normalize(response["results"])
         df["valid_from"] = pd.to_datetime(df["valid_from"])

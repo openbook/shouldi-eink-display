@@ -2,6 +2,8 @@
 import sys
 import os
 import datetime
+import logging
+
 from PIL import ImageOps, Image, ImageFont, ImageDraw
 from inky.auto import auto
 
@@ -25,7 +27,11 @@ def main():
     template = Image.open(os.path.join(imgdir, "template-combined.png"))
     img.paste(template, (0, 0))
 
-    carbon_intensity = CarbonIntensityForecastGB()
+    try:
+        carbon_intensity = CarbonIntensityForecastGB()
+    except Exception as e:
+        return logging.error('Unable to update combined display')
+
     intensity_data = carbon_intensity.now()
     ci_daily_max = carbon_intensity.forecast_max()
     total_value = carbon_intensity.now("total")
@@ -52,17 +58,16 @@ def main():
 
     draw.text((270, 3), "Forecast", inky_display.BLACK, font=fonts.raleway_reg_30)
     rhs_start = 215
-    draw.text((248, 50), "Mor", inky_display.BLACK, font=fonts.raleway_light_15)
-    draw.text((291, 50), "Aft", inky_display.BLACK, font=fonts.raleway_light_15)
-    draw.text((328, 50), "Eve", inky_display.BLACK, font=fonts.raleway_light_15)
-    draw.text((369, 50), "Ngt", inky_display.BLACK, font=fonts.raleway_light_15)
+    draw.text((248, 50), "Ngt", inky_display.BLACK, font=fonts.raleway_light_15)
+    draw.text((291, 50), "Mor", inky_display.BLACK, font=fonts.raleway_light_15)
+    draw.text((330, 50), "Aft", inky_display.BLACK, font=fonts.raleway_light_15)
+    draw.text((369, 50), "Eve", inky_display.BLACK, font=fonts.raleway_light_15)
 
     # Display icons
     trueImage = Image.open(os.path.join(imgdir, "check.png"))
     falseImage = Image.open(os.path.join(imgdir, "remove.png"))
-
     index = 1
-    max_x_options = {"morning": 240, "afternoon": 285, "evening": 325, "night": 365}
+    max_x_options = {"night": 245, "morning": 285, "afternoon": 325, "evening": 365}
     for date, value in carbon_intensity.forecast("bool").items():
         if index > 4:
             break
@@ -76,10 +81,15 @@ def main():
             inky_display.BLACK,
             font=fonts.raleway_reg_25,
         )
-        img.paste(trueImage if value["morning"] else falseImage, (245, yValue))
-        img.paste(trueImage if value["afternoon"] else falseImage, (285, yValue))
-        img.paste(trueImage if value["evening"] else falseImage, (325, yValue))
-        img.paste(trueImage if value["night"] else falseImage, (365, yValue))
+        if "night" in value:
+            img.paste(trueImage if value["night"] else falseImage, (245, yValue))
+        if "morning" in value:
+            img.paste(trueImage if value["morning"] else falseImage, (285, yValue))
+        if "afternoon" in value:
+            img.paste(trueImage if value["afternoon"] else falseImage, (325, yValue))
+        if "evening" in value:
+            img.paste(trueImage if value["evening"] else falseImage, (365, yValue))
+
         max_slot, max_value = ci_daily_max[date]
         max_value = max_x_options.get(max_slot, "Invalid max")
         draw.rectangle(

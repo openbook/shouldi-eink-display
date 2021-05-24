@@ -33,6 +33,10 @@ class CarbonIntensityForecastGB:
 
     def fetch_data(self):
         response_forecast = requests.get(self.get_request_url())
+        if response_forecast.status_code != 200:
+            logging.error('Error fetching Agile tariff data %d', response_forecast.status_code)
+            raise Exception("Error raised")
+
         response = response_forecast.json()
         self.response_data = (
             response["data"]["data"]
